@@ -72,3 +72,4 @@ mongod
 *.ntvs*
 *.njsproj
 *.sln
+mongodb-linux-x86_64-ubuntu1604-3.2.9/
