@@ -53,15 +53,22 @@
 </head>
 
 <body class="ng-cloak">
-  <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
-  <section class="content">
-    <section class="container">
-      {% block content %}{% endblock %}
-    </section>
-  </section>
+<header ng-include="'/modules/core/client/views/header.client.view.html'"
+        class="navbar navbar-fixed-top navbar-inverse"></header>
+<div class="container-fluid " id="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+    <p class="pull-right visible-xs">
+      <button type="button" class="btn btn-primary btn-xs"
+              data-toggle="offcanvas" id="at-home-links">Site Links >>
+      </button>
+    </p>
+    <div class="col-xs-12 col-sm-9" id="main-content">
+    {% block content %}{% endblock %}
+    </div>
+    <div ng-include="'/modules/core/client/views/footer.client.view.html'"></div>
+  </div>
+</div>
 
-
-  <div ng-include="'/modules/core/client/views/footer.client.view.html'"></div>
 
   <!--Embedding The User Object-->
   <script type="text/javascript">
