@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('core').controller('RightbarController', ['$scope', 'Authentication', 'Menus',
 	function($scope, Authentication, Menus) {
