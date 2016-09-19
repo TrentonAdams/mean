@@ -30,18 +30,45 @@
 
   <!-- Fav Icon -->
   <link href="{{favicon}}" rel="shortcut icon" type="image/x-icon">
-
+  <style>
+    .checkboxdemoBasicUsage div.flex-xs {
+      min-height: 40px; }
+    .checkboxdemoBasicUsage .checkboxDemo1 div {
+      clear: both; }
+    .checkboxdemoBasicUsage p {
+      padding-left: 8px; }
+    .checkboxdemoBasicUsage fieldset.standard {
+      border-style: solid;
+      border-width: 1px; }
+    .checkboxdemoBasicUsage legend {
+      color: #3F51B5; }
+    .checkboxdemoBasicUsage legend code {
+      color: #3F51B5;
+      font-weight: normal; }
+    .checkboxdemoBasicUsage .ipsum {
+      color: saddlebrown; }
+  </style>
   <!-- Application CSS Files -->
   {% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
 </head>
 
 <body class="ng-cloak">
-  <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
-  <section class="content">
-    <section class="container">
-      {% block content %}{% endblock %}
-    </section>
-  </section>
+<header ng-include="'/modules/core/client/views/header.client.view.html'"
+        class="navbar navbar-fixed-top navbar-inverse"></header>
+<div class="container-fluid " id="container">
+  <div class="row row-offcanvas row-offcanvas-right">
+    <p class="pull-right visible-xs">
+      <button type="button" class="btn btn-primary btn-xs"
+              data-toggle="offcanvas" id="at-home-links">Site Links >>
+      </button>
+    </p>
+    <div class="col-xs-12 col-sm-9" id="main-content">
+    {% block content %}{% endblock %}
+    </div>
+    <div ng-include="'/modules/core/client/views/footer.client.view.html'"></div>
+  </div>
+</div>
+
 
   <!--Embedding The User Object-->
   <script type="text/javascript">
