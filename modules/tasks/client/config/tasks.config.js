@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('tasks')
+    .module('tasks', ['ngMaterial'])
     .run(menuConfig);
 
   menuConfig.$inject = ['Menus'];

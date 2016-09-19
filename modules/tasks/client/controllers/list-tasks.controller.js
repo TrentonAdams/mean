@@ -6,8 +6,7 @@
       .module('tasks')
       .controller('TasksListController', TasksListController);
 
-  TasksListController.$inject = ['TasksService'];
-  TasksListController.$inject = ['$scope'];
+  TasksListController.$inject = ['TasksService', '$scope'];
 
   function TasksListController(TasksService, $scope)
   {
@@ -15,7 +14,7 @@
 
     vm.tasks = TasksService.query();
 
-    $scope.items = [1, 2, 3, 4, 5];
+    $scope.items = vm.tasks;
     $scope.selected = [1];
     $scope.toggle = function (item, list)
     {
