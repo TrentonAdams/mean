@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
 var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
@@ -22,11 +22,8 @@ exports.signup = function (req, res) {
   // For security measurement we remove the roles from the req.body object
   delete req.body.roles;
 
-  // Init Variables
+  // Init user and add missing fields
   var user = new User(req.body);
-  var message = null;
-
-  // Add missing user fields
   user.provider = 'local';
   user.displayName = user.firstName + ' ' + user.lastName;
 
@@ -88,11 +85,6 @@ exports.signout = function (req, res) {
  */
 exports.oauthCall = function (strategy, scope) {
   return function (req, res, next) {
-    // Set redirection path on session.
-    // Do not redirect to a signin or signup page
-    if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
-      req.session.redirect_to = req.query.redirect_to;
-    }
     // Authenticate
     passport.authenticate(strategy, scope)(req, res, next);
   };
@@ -103,11 +95,9 @@ exports.oauthCall = function (strategy, scope) {
  */
 exports.oauthCallback = function (strategy) {
   return function (req, res, next) {
-    // Pop redirect URL from session
-    var sessionRedirectURL = req.session.redirect_to;
-    delete req.session.redirect_to;
 
-    passport.authenticate(strategy, function (err, user, redirectURL) {
+    // info.redirect_to contains inteded redirect path
+    passport.authenticate(strategy, function (err, user, info) {
       if (err) {
         return res.redirect('/authentication/signin?err=' + encodeURIComponent(errorHandler.getErrorMessage(err)));
       }
@@ -119,7 +109,7 @@ exports.oauthCallback = function (strategy) {
           return res.redirect('/authentication/signin');
         }
 
-        return res.redirect(redirectURL || sessionRedirectURL || '/');
+        return res.redirect(info.redirect_to || '/');
       });
     })(req, res, next);
   };
@@ -148,6 +138,15 @@ exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
       $or: [mainProviderSearchQuery, additionalProviderSearchQuery]
     };
 
+    // Setup info object
+    var info = {};
+
+    // Set redirection path on session.
+    // Do not redirect to a signin or signup page
+    if (noReturnUrls.indexOf(req.query.redirect_to) === -1) {
+      info.redirect_to = req.query.redirect_to;
+    }
+
     User.findOne(searchQuery, function (err, user) {
       if (err) {
         return done(err);
@@ -169,11 +168,11 @@ exports.saveOAuthUserProfile = function (req, providerUserProfile, done) {
 
             // And save the user
             user.save(function (err) {
-              return done(err, user);
+              return done(err, user, info);
             });
           });
         } else {
-          return done(err, user);
+          return done(err, user, info);
         }
       }
     });

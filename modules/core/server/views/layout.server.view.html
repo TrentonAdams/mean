@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-strict-di>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
   <base href="/">
-  <title>{{title}}</title>
+  <title page-title></title>
   <meta name="description" content="{{description}}">
   <meta name="fragment" content="!">
 
@@ -49,7 +49,7 @@
       color: saddlebrown; }
   </style>
   <!-- Application CSS Files -->
-  {% for cssFile in cssFiles %}<link rel="stylesheet" href="{{cssFile}}">{% endfor %}
+  {{#each cssFiles}}<link rel="stylesheet" href="{{this}}">{{/each}}
 </head>
 
 <body class="ng-cloak">
@@ -63,28 +63,46 @@
       </button>
     </p>
     <div class="col-xs-12 col-sm-9" id="main-content">
-    {% block content %}{% endblock %}
+      {{{block "content"}}}
     </div>
     <div ng-include="'/modules/core/client/views/footer.client.view.html'"></div>
   </div>
 </div>
 
 
+  <noscript>
+    <style>
+      [ng\:cloak], [ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+        display: block !important;
+      }
+    </style>
+    <div class="alert alert-warning">
+      <strong>This page requires JavaScript.</strong> Please enable it in your browser.
+    </div>
+  </noscript>
+
   <!--Embedding The User Object-->
   <script type="text/javascript">
-    var user = {{ user | json | safe }};
+    var user = {{{ user }}};
+    var env = "{{ env }}";
   </script>
 
   <!--Load The Socket.io File-->
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 
   <!--Application JavaScript Files-->
-  {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}"></script>{% endfor %}
+    {{#each jsFiles}}<script type="text/javascript" src="{{this}}"></script>{{/each}}
 
-  {% if livereload %}
+  <!--owasp config sync-->
+  <script type="text/javascript">
+    var sharedConfig = {{{ sharedConfig }}};
+    owaspPasswordStrengthTest.config(sharedConfig.owasp);
+  </script>
+
+  {{#if livereload}}
   <!--Livereload script rendered -->
   <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
-  {% endif %}
+  {{/if}}
 </body>
 
 </html>
