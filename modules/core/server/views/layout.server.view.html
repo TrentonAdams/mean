@@ -35,12 +35,22 @@
 </head>
 
 <body class="ng-cloak">
-  <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header>
-  <section class="content">
-    <section class="container">
+<header ng-include="'/modules/core/client/views/header.client.view.html'"
+        class="navbar navbar-fixed-top navbar-inverse"></header>
+<div class="container-fluid " id="container">
+  <section class="content row row-offcanvas row-offcanvas-right">
+    <p class="pull-right visible-xs">
+      <button type="button" class="btn btn-primary btn-xs"
+              data-toggle="offcanvas" id="at-home-links">Site Links >>
+      </button>
+    </p>
+    <section class="container col-xs-12 col-sm-9">
       {{{block "content"}}}
     </section>
+    <div ng-include="'/modules/core/client/views/footer.client.view.html'"></div>
   </section>
+</div>
+
 
   <noscript>
     <style>
@@ -64,7 +74,7 @@
 
   <!--Application JavaScript Files-->
     {{#each jsFiles}}<script type="text/javascript" src="{{this}}"></script>{{/each}}
-  
+
   <!--owasp config sync-->
   <script type="text/javascript">
     var sharedConfig = {{{ sharedConfig }}};

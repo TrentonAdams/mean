@@ -53,10 +53,6 @@ tr.row-separator {
   background-color: #EFEFEF;
 }
 
-#validateemail {
-    display: none;
-}
-
 .required-field-block {
     margin-top: 8px;
     margin-bottom: 8px;

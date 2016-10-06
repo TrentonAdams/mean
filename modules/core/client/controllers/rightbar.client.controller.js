@@ -1,6 +1,6 @@
 'use strict';
 angular.module('core').controller('RightbarController', [
-  '$scope', 'Authentication', 'Menus',
+  '$scope', 'Authentication', 'menuService',
   function ($scope, Authentication, Menus) {
     $scope.authentication = Authentication;
     $scope.isCollapsed = false;

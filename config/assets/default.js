@@ -11,8 +11,6 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap-theme.css',
         'public/lib/ng-img-crop/compile/unminified/ng-img-crop.css',
         'public/lib/angular-material/angular-material.css',
-        'public/custom/custom.css',
-        'public/custom/offcanvas.css',
         'public/lib/jquery-ui/themes/base/jquery-ui.css',
         // endbower
       ],
@@ -31,7 +29,6 @@ module.exports = {
         'public/lib/angular-aria/angular-aria.js',
         'public/lib/angular-material/angular-material.js',
         'public/lib/jquery/dist/jquery.js',
-        'public/custom/offcanvas.js',
         'public/lib/jquery-ui/jquery-ui.js',
         // endbower
       ],
